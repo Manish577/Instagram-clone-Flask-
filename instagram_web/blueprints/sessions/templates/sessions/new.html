@@ -1,0 +1,42 @@
+{% extends "_layout.html" %} {% block content %}
+
+<div id="signin-page">
+  <div class="bg">
+    <div class="card w-50 mx-auto p-3 mt-4 mb-3">
+      <h1 class="card-title">Sign In to Nextagram.</h1>
+      <form action="{{ url_for('sessions.signed_in') }}" method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input
+            name="username"
+            type="text"
+            class="form-control"
+            id="username"
+            placeholder="Enter username"
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input
+            name="password"
+            type="password"
+            class="form-control"
+            id="password"
+            placeholder="Password"
+          />
+        </div>
+        <button type="submit" class="btn btn-warning">Sign In</button>
+      </form>
+      <a href="{{ url_for('sessions.google') }}">
+        Have a google account? Sign In with Google!
+      </a>
+      {% with messages = get_flashed_messages() %} {% if messages %} {% for
+      message in messages %}
+      <h2>{{ message }}</h2>
+      {% endfor %} {% endif %} {% endwith %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

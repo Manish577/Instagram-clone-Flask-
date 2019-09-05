@@ -1,0 +1,42 @@
+#profile-page {
+  position: relative;
+  .wrapper {
+    height: auto;
+    min-height: calc(100% - 55px);
+  }
+  .contents {
+    padding-top: 55px;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  ul {
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+  }
+
+  li {
+    display: inline;
+  }
+
+  .bio {
+    width: 30rem;
+    height: 15rem;
+    left: 50px;
+  }
+
+  .counts {
+    font-weight: bold;
+  }
+  .bg {
+    background-color: $secondary-accent;
+    left: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+    .card {
+      background-color: $secondary-accent;
+    }
+  }
+}

@@ -1,0 +1,27 @@
+#signin-page {
+  padding-top: 45px;
+  .card {
+    color: $primary-accent;
+    border: 3px solid #e1ddd4;
+  }
+
+  .card-title {
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+      "Lucida Sans", Arial, sans-serif;
+  }
+
+  input {
+    border: 2px solid #e1ddd4;
+  }
+
+  .bg {
+    background-image: url("https://png.pngtree.com/thumb_back/fw800/background/20190222/ourmid/pngtree-simple-beige-banner-background-material-backgroundsimpleposter-backgroundbanner-backgroundbackground-image_51299.jpg");
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+
+  a {
+    color: #c78e49;
+  }
+}

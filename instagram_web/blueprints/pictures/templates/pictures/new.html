@@ -1,0 +1,36 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+
+    <h1>Upload Your Files Bro</h1>
+
+    <form action="{{url_for('pictures.uploaded')}}" method="POST" enctype="multipart/form-data">
+        <input type='hidden' name="csrf_token" value="{{csrf_token()}}" />
+        <label for="user_file">Upload Your File</label>
+        <br></br>
+        <input type="file" name="user_file">
+        <br></br>
+        <button type="submit">Upload</button>
+
+    </form>
+
+</body>
+
+</html>
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+{% for message in messages %}
+<h2>{{ message }}</h2>
+{% endfor %}
+{% endif %}
+{% endwith %}
+{% endblock %}

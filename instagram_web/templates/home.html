@@ -1,0 +1,64 @@
+{% extends "_layout.html" %} {% block title %} Homepage {% endblock %} {% block
+header %} {% endblock %} {% block content %}
+
+<style>
+  #homepage {
+    padding-top: 55px;
+  }
+  .user-directory {
+    text-align: center;
+  }
+</style>
+<div id="homepage">
+  <a class='user-directory' href="{{ url_for('users.directory') }}">Follow some people!</a>
+  {% for u in current_user.following %}
+  <div>
+    <h3>@{{ u.username }}</h3>
+    <img class="rounded-circle" style="width: 250px; height: 250px;" src="{{ u.profile_image_path }}" />
+    {% if current_user.is_authenticated and u.id != current_user.id %}
+    <button type="button" id="followbtn-{{ u.id }}"
+      class="btn {{'btn-primary' if u not in current_user.following}} {{'btn-light' if u in current_user.following}} {{'btn-info' if u in current_user.following_request}} followbtns">
+      {% if u in current_user.following %}
+      Following
+      {% elif u in current_user.following_request %}
+      Pending
+      {% else %}
+      Follow
+      {% endif %}
+    </button>
+  </div>
+  {% endif %}
+  {% if u.status == 'Public' or current_user.id == u.id or u in current_user.following %}
+  <div class="picture-container-{{ u.id }}">
+    {% for image in u.pictures %}
+    <div>
+      <img class="mx-2 my-2 " style="width: 250px; height: 250px;" src="{{ image.post_image }}" />
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <h1 class="text-center">Private Profile</h1>
+  {% endif %}
+  {% endfor %}
+</div>
+{% endblock %}
+
+
+<!-- <script>
+    $(".followbtns").on("click", function(e) {
+      // do some splitting and get id
+      $.ajax({
+        url: `/users/follow/${id}`,
+        method: 'post',
+        success: function(response) {
+          console.log(response)
+          // {
+          //   success: true
+          // }
+          if (response.success) {
+            $('#followbtn-id')
+          }
+        }
+      })
+    });
+  </script> -->

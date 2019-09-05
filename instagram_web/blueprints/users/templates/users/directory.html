@@ -1,0 +1,37 @@
+{% extends "_layout.html" %}
+{% block content %}
+
+<style>
+    #directory {
+        padding-top: 55px;
+    }
+</style>
+
+<div id="directory">
+    <h1 class="text-center">Users to Follow</h1>
+    {% for user in users %}
+
+    <h3>@{{ user.username }}</h3>
+    <img class="rounded-circle" style="width: 250px; height: 250px;" src="{{ user.profile_image_path }}" />
+    {% if current_user.is_authenticated and user.id != current_user.id %}
+    <button type="button" id="followbtn-{{ user.id }}"
+        class="btn {{'btn-primary' if user not in current_user.following}} {{'btn-light' if user in current_user.following}} {{'btn-info' if user in current_user.following_request}} followbtns">
+        {% if user in current_user.following %}
+        Following
+        {% elif user in current_user.following_request %}
+        Pending
+        {% else %}
+        Follow
+        {% endif %}
+    </button>
+    {% endif %}
+    {% for image in user.pictures %}
+    <div>
+        <img class="mx-2 my-2 " style="width: 250px; height: 250px;" src="{{ image.post_image }}" />
+    </div>
+    {% endfor %}
+
+    {% endfor %}
+</div>
+
+{% endblock %}

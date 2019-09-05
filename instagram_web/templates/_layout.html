@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+  <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}" />
+
+  {% assets "home_css" %}
+  <link rel="stylesheet" href="{{ ASSET_URL }}" />
+  {% endassets %} {% assets "home_js" %}
+  <script type="text/javascript" src="{{ ASSET_URL }}"></script>
+  {% endassets %} {% block header %}{% endblock %}
+  <title>{% block title %}{% endblock %}NEXTAGRAM</title>
+</head>
+
+<body>
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light">
+    <img src="https://image.flaticon.com/icons/png/512/87/87390.png" width="25px" height="25px" class="mx-1" />
+    <div class="navbar-brand">Nextagram</div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        {% if current_user.is_authenticated %}
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <form action="{{ url_for('users.show', username=current_user.username) }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-light mx-2">
+              My Profile
+            </button>
+          </form>
+        </li>
+        <li class="nav-item">
+          <form action="{{ url_for('users.sign_out') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-danger mx-2">
+              Sign out
+            </button>
+          </form>
+        </li>
+        <li>
+          <form action="{{ url_for('users.edit') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-success mx-2">
+              Edit Profile
+            </button>
+          </form>
+        </li>
+        <li>
+          <form action="{{ url_for('users.follower_request') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-info mx-2">
+              Follower Requests
+            </button>
+          </form>
+        </li>
+        {% endif %} {% if not current_user.is_authenticated %}
+        <li>
+          <form action="{{ url_for('sessions.sign_in') }}" method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-primary mx-2">
+              Sign In
+            </button>
+          </form>
+        </li>
+        <li>
+          <form action="{{ url_for('users.new') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <button type="submit" class="btn btn-info mx-2">
+              New user? Sign Up Now!
+            </button>
+          </form>
+        </li>
+        {% endif %}
+      </ul>
+      <form action="{{ url_for('users.show_user') }}" method="POST" class="form-inline my-2 my-lg-0">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+        <input id="search-input" class="form-control mr-sm-2" name="searched-name" type="search"
+          placeholder="Search username" aria-label="Search" />
+        <button id="search-button" class="btn btn-outline-success my-2 my-sm-0" type="submit" disabled>
+          Search
+        </button>
+      </form>
+    </div>
+  </nav>
+  {% block content %} {% endblock %}
+</body>
+<script>
+  // $('#search-input').on('keyup', function() {
+  //   if ($(this).val().length) {
+  //     $('#search-button').prop('disabled', false)
+  //   } else {
+  //     $('#search-button').prop('disabled', true)
+  //   }
+  // })
+
+  let searchbtn = document.getElementById("search-button");
+  let searchint = document.getElementById("search-input");
+  searchint.addEventListener("keyup", function () {
+    if (searchint.value.length) {
+      searchbtn.disabled = false;
+    } else {
+      searchbtn.disabled = true;
+    }
+  });
+  // if (!searchint.onInput()) {
+  //   searchbtn.disabled = true
+  // } else {
+  //   searchbtn.disabled = false
+  // }
+  const csrf_token = "{{ csrf_token() }}";
+
+  $.ajaxSetup({
+    beforeSend: function (xhr, settings) {
+      if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+        xhr.setRequestHeader("X-CSRFToken", csrf_token);
+      }
+    }
+  });
+  $(".followbtns").on("click", function (e) {
+    // do some splitting and get id
+    console.log(e.target.id.split('-')[1])
+    id = e.target.id.split('-')[1]
+    if ($(`#followbtn-${id}`).html().trim() == "Follow") {
+      $.ajax({
+        url: `/users/follow/${id}`,
+        method: 'post',
+        success: function (response) {
+          console.log(response)
+          if (response.success) {
+            if (response.pending) {
+              $(`#followbtn-${id}`).html('Pending').removeClass('btn-primary').addClass('btn-info')
+            } else {
+              $(`#followbtn-${id}`).html('Following').removeClass('btn-primary').addClass('btn-light')
+              $('.followers').html(response.followers)
+            }
+          }
+        }
+      })
+      // } else if ($(`#followbtn-${id}`).html().trim() == "Pending") 
+    } else {
+      $.ajax({
+        url: `/users/unfollow/${id}`,
+        method: 'post',
+        success: function (response) {
+          console.log(response)
+          if (response.success) {
+            if ($(`#followbtn-${id}`).html().trim() == "Following") {
+              $(`#followbtn-${id}`).html('Follow').removeClass('btn-light').addClass('btn-primary')
+              $('.followers').html(response.followers)
+            } else {
+              $(`#followbtn-${id}`).html('Follow').removeClass('btn-info').addClass('btn-primary')
+            }
+            if (!response.status) {
+              $(`.picture-container-${id}`).replaceWith(response.private_container)
+            }
+          }
+        }
+      })
+    }
+  });
+</script>
+
+</html>

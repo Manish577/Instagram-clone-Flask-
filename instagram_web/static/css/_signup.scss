@@ -1,0 +1,26 @@
+#signup-page {
+  height: 100%;
+  padding-top: 55px;
+  position: relative;
+
+  .card {
+    color: $primary-accent;
+    border: 3px solid #e1ddd4;
+  }
+
+  .card-title {
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+      "Lucida Sans", Arial, sans-serif;
+  }
+
+  input {
+    border: 2px solid #e1ddd4;
+  }
+
+  .bg {
+    background-image: url("https://backgroundcheckall.com/wp-content/uploads/2017/12/cream-background-9.jpg");
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+  }
+}
