@@ -1,80 +1,67 @@
 {% extends "_layout.html" %}
 {% block content %}
 <div id="profile-page">
-    <div class="wrapper">
-        <div class='bg'>
-            <div class="contents">
-                <div class='card border-0 m-4 top-content'>
-                    <div class="row justify-content-center border-0">
-                        <div class="col-md-6">
-                            <img class="rounded-circle profile-image" style="width: 180px; height: 180px;"
-                                src="{{user.profile_image_path}}" />
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card bio border-0">
-                                <h1>@{{user.username}}</h1>
-                                {% if current_user.is_authenticated and user.id != current_user.id %}
-                                <button type="button" id="followbtn-{{ user.id }}"
-                                    class="btn {{'btn-primary' if user not in current_user.following}} {{'btn-light' if user in current_user.following}} {{'btn-info' if user in current_user.following_request}} followbtns">
-                                    {% if user in current_user.following %}
-                                    Following
-                                    {% elif user in current_user.following_request %}
-                                    Pending
-                                    {% else %}
-                                    Follow
-                                    {% endif %}
-                                </button>
-                                {% endif %}
-                                <ul>
-                                    <li><span class='counts'>{{user.pictures | length}}</span> posts</li>
-                                    <li><span class='counts followers'>{{user.follower | length}}</span> followers</li>
-                                    <li><span class='counts'>{{user.following | length}}</span> following</li>
-                                </ul>
-                                <div class='card border-0 description'>{{user.description}}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class='text-center'>
-                    {% if current_user.id == user.id %}
-                    <form action="{{url_for('pictures.create')}}" method="POST" enctype="multipart/form-data">
-                        <input type='hidden' name="csrf_token" value="{{csrf_token()}}" />
-                        <br></br>
-                        <input type="file" name="picture">
-                        <br></br>
-                        <button type="submit" class='btn btn-primary'>Post Picture</button>
-                    </form>
+    <div class="container">
+        <div class='row top-content'>
+            <div class="col-md-6">
+                <img class="rounded-circle profile-image" style="width: 180px; height: 180px;"
+                    src="{{user.profile_image_path}}" />
+            </div>
+            <div class="col-md-6">
+                <div class="card bio border-0 top-details">
+                    <h1>@{{user.username}}</h1>
+                    {% if current_user.is_authenticated and user.id != current_user.id %}
+                    <button type="button" id="followbtn-{{ user.id }}"
+                        class="btn {{'btn-primary' if user not in current_user.following}} {{'btn-light' if user in current_user.following}} {{'btn-info' if user in current_user.following_request}} followbtns">
+                        {% if user in current_user.following %}
+                        Following
+                        {% elif user in current_user.following_request %}
+                        Pending
+                        {% else %}
+                        Follow
+                        {% endif %}
+                    </button>
                     {% endif %}
+                    <ul>
+                        <li><span class='counts'>{{user.pictures | length}}</span> posts</li>
+                        <li><span class='counts followers'>{{user.follower | length}}</span> followers</li>
+                        <li><span class='counts'>{{user.following | length}}</span> following</li>
+                    </ul>
+                    <div class='card border-0 description'>{{user.description}}</div>
                 </div>
-                {% if user.status == 'Public' or current_user.id == user.id or user in current_user.following %}
-                <div class="d-flex justify-content-center flex-wrap picture-container-{{ user.id }}">
+            </div>
+        </div>
+        <div class='text-center'>
+            {% if current_user.id == user.id %}
+            <form action="{{url_for('pictures.create')}}" method="POST" enctype="multipart/form-data">
+                <input type='hidden' name="csrf_token" value="{{csrf_token()}}" />
+                <br></br>
+                <input type="file" name="picture">
+                <br></br>
+                <button type="submit" class='btn btn-primary'>Post Picture</button>
+            </form>
+            {% endif %}
+        </div>
+        <div class="row">
+            <div class="container">
+                {% if user.status == 'Public' or current_user.id == user.id or user in current_user.following %} <div
+                    class="row picture-container-{{ user.id }} piccon">
                     {% for picture in user.ordering %}
-                    <div class='d-flex m-4'>
+                    <div class='m-2'>
                         {% if current_user != user %}
                         <form action="{{url_for('donations.new',id=picture.id)}}">
                             {% endif %}
                             <input type='image' alt="Submit" src="{{picture.post_image}}"
-                                style="width: 300px; height: 300px;" />
+                                style="width: 350px; height: 350px;" />
                         </form>
                     </div>
                     {% endfor %}
+                    {% else %}
+                    <h1 class="text-center">Private Profile</h1>
+                    {% endif %}
                 </div>
-                {% else %}
-                <h1 class="text-center">Private Profile</h1>
-                {% endif %}
             </div>
         </div>
     </div>
 </div>
-
-
-
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<h2>{{ message }}</h2>
-{% endfor %}
-{% endif %}
-{% endwith %}
-
 {% endblock %}

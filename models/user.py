@@ -19,6 +19,9 @@ class User(BaseModel, UserMixin):
     profile_picture = pw.TextField(null=True)
     status = pw.TextField(null=True)
 
+    def num_of_image(self, count=-1):
+        return [x for x in Pictures.select().where(Pictures.user_id == self.id).order_by(Pictures.created_at.desc())[0:count]]
+
     @hybrid_property
     def ordering(self):
         return [x for x in Pictures.select().where(Pictures.user_id == self.id).order_by(Pictures.created_at.desc())]

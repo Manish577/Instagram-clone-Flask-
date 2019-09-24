@@ -1,16 +1,10 @@
 {% extends "_layout.html" %}
 {% block content %}
 
-<style>
-    #directory {
-        padding-top: 55px;
-    }
-</style>
 
 <div id="directory">
-    <h1 class="text-center">Users to Follow</h1>
     {% for user in users %}
-
+    {% if user.pictures %}
     <h3>@{{ user.username }}</h3>
     <img class="rounded-circle" style="width: 250px; height: 250px;" src="{{ user.profile_image_path }}" />
     {% if current_user.is_authenticated and user.id != current_user.id %}
@@ -30,7 +24,7 @@
         <img class="mx-2 my-2 " style="width: 250px; height: 250px;" src="{{ image.post_image }}" />
     </div>
     {% endfor %}
-
+    {% endif %}
     {% endfor %}
 </div>
 

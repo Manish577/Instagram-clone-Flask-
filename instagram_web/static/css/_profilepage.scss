@@ -1,16 +1,60 @@
-#profile-page {
-  position: relative;
-  margin-top: 55px;
-  min-height: calc(100vh - 55px);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  .wrapper {
-    height: 100%;
+#profile-page {
+  margin-top: 56px;
+  min-height: calc(100vh - 56px);
+  background: $secondary-accent;
+
+
+  .top-content {
+    padding-top: 20px;
+    background: $secondary-accent;
   }
-  .contents {
-    padding-top: 55px;
-    padding-left: 30px;
-    padding-right: 30px;
+
+  .top-details {
+    background: $secondary-accent;
   }
+
+  .details {
+    background: $secondary-accent;
+    margin: 0;
+    padding: 0;
+  }
+
+  .description {
+    background: $secondary-accent;
+  }
+
+  .piccon {
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .upload-image {
+    justify-content: center;
+    text-align: center;
+    padding-bottom: 20px;
+  }
+
+//   .wrapper {
+//     background-color: $secondary-accent;
+//     height: 100vh;
+//   }
+
+//   .profile-image {
+//     margin-left: calc(1.5rem + 30px);
+//   }
+
+//   .contents {
+//     padding-top: 55px;
+//     padding-left: 30px;
+//     padding-right: 30px;
+//   }
 
   ul {
     list-style: none;
@@ -22,24 +66,23 @@
     display: inline;
   }
 
-  .bio {
-    width: 30rem;
-    height: 15rem;
-    left: 50px;
-  }
+//   .bio {
+//     width: 30rem;
+//     height: 15rem;
+//     left: 50px;
+//   }
 
   .counts {
     font-weight: bold;
   }
-  .bg {
-    height: 100%;
-    background-color: $secondary-accent;
-    left: 0;
-    right: 0;
-    position: absolute;
-    z-index: 1;
-    .card {
-      background-color: $secondary-accent;
-    }
-  }
+//   .bg {
+//     background-color: $secondary-accent;
+//     left: 0;
+//     right: 0;
+//     position: absolute;
+//     z-index: 1;
+//     .card {
+//       background-color: $secondary-accent;
+//     }
+//   }
 }

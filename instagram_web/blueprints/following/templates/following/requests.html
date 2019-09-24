@@ -1,10 +1,5 @@
 {% extends "_layout.html" %}
 {% block content %}
-<style>
-    #request-page {
-        padding-top: 55px;
-    }
-</style>
 
 <div id="request-page">
     {% if current_user.follower_request %}
@@ -24,7 +19,7 @@
     </div>
     {% endfor %}
     {% else %}
-    <h1 class="text-center">No Pending Follower Requests.</h1>
+    <h1 class="norequest">No Pending Follower Requests.</h1>
     {% endif %}
 </div>
 

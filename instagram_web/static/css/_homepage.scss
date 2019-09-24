@@ -1,0 +1,58 @@
+#homepage {
+  min-height: calc(100vh - 55px);
+  margin-top: 55px;
+  background-color: $secondary-accent;
+
+  .notlogin {
+    text-align: center;
+    font-family: monospace;
+    padding-top: 30vh;
+  }
+
+  .tap-the-symbol {
+    font-style: italic;
+    text-align: center;
+  }
+
+  .profile-container {
+    border-color: $primary-accent;
+    max-width: 50vw;
+  }
+  .top-right-content {
+    margin-left: 10px;
+  }
+  ul {
+    list-style: none;
+    margin: 0 0 10px 0;
+    padding: 0;
+  }
+  .counts {
+    font-weight: bold;
+  }
+  li {
+    display: inline;
+  }
+  .user-directory {
+    padding: calc(50vh - 75px);
+    text-align: center;
+  }
+  .images {
+    max-width: 100%;
+    height: auto;
+  }
+  ul {
+    list-style: none;
+  }
+  .homepage-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .username {
+    text-decoration: none;
+    color: black;
+    font-size: 1.5rem;
+  }
+  .top-section {
+    display: flex;
+  }
+}

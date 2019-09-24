@@ -1,0 +1,11 @@
+#request-page {
+    min-height: calc(100vh - 55px);
+    margin-top: 55px;
+    background-color: $secondary-accent;
+
+    .norequest {
+        text-align: center;
+        font-family: monospace;
+        padding-top: 30vh;
+    }
+}

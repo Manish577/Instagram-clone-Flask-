@@ -27,13 +27,19 @@ def create():
     password = request.form.get('password')
     confirm_password = request.form.get('confirm-password')
     description = request.form.get('description')
+    status = request.form.get('signup-status')
     if password != confirm_password:
         password_error.append(
             'PLEASE MAKE SURE CONFIRM PASSORD FIELD IS EQUAL TO PASSWORD FIELD. PLEASE TRY AGAIN.')
         return render_template('users/new.html', errors=password_error)
 
+    if status == "private":
+        status = "Private"
+    else:
+        status = "Public"
+
     new_user = User(name=name, username=username, email=email,
-                    password=password, description=description)
+                    password=password, description=description, status=status)
 
     if new_user.save():
         flash('Successfully created user.')
@@ -41,22 +47,6 @@ def create():
         return redirect(url_for('users.show', username=new_user.username))
     else:
         return render_template('users/new.html', username=request.form.get('username'), email=request.form.get('email'), errors=new_user.errors)
-
-# @users_blueprint.route('/sign_in')
-# def sign_in():
-#     return render_template('users/sign_in.html')
-
-# @users_blueprint.route('/sign_in', methods=["POST"])
-# def signed_in():
-#     input_username = request.form.get('username')
-#     input_password = request.form.get('password')
-#     user = User.get_or_none(User.username == input_username)
-#     if user and check_password_hash(user.password, input_password):
-#         login_user(user)
-#         return redirect(url_for('users.show', username=user.username))
-#     else:
-#         flash('Invalid log in. Try again')
-#         return render_template('users/sign_in.html')
 
 
 @users_blueprint.route('/<username>', methods=["GET"])
@@ -66,7 +56,7 @@ def show(username):
     if user:
         return render_template('users/username.html', user=user, pictures=pictures)
     else:
-        flash('User not found.')
+        flash('User not found. Please be aware that username is case sensitive.')
         return render_template('users/search-error.html')
 
 
@@ -195,7 +185,7 @@ def unfollow(id):
 
 @users_blueprint.route('/requests')
 def follower_request():
-    return render_template('users/requests.html')
+    return render_template('following/requests.html')
 
 
 @users_blueprint.route('/requests/<id>', methods=['POST'])

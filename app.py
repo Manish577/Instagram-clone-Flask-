@@ -7,6 +7,8 @@ from flask_login import LoginManager
 from models.user import User
 import boto3
 import botocore
+from flask_jwt_extended import JWTManager
+from instagram_api.blueprints.users.views import users_api_blueprint
 
 
 web_dir = os.path.join(os.path.dirname(
@@ -23,10 +25,14 @@ s3 = boto3.client(
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+jwt = JWTManager(app)
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
     return User.get_by_id(user_id)
+
 
 if os.getenv('FLASK_ENV') == 'production':
     app.config.from_object("config.ProductionConfig")
