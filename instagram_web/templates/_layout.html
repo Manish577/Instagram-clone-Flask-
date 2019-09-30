@@ -49,7 +49,7 @@
         <li class="nav-item">
           <form action="{{ url_for('users.sign_out') }}" method="POST">
             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-            <button type="submit" class="btn btn-danger mx-2">
+            <button id="signoutbtn" type="submit" class="btn btn-danger mx-2">
               Sign out
             </button>
           </form>
@@ -150,11 +150,10 @@
               Toastify({
                 text: "Pending follow request.",
                 duration: 3000,
-                newWindow: true,
                 close: true,
-                gravity: "top", 
-                position: 'right', 
-                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d,)",
+                gravity: "top",
+                position: 'right',
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d)",
                 stopOnFocus: true
               }).showToast();
             } else {
@@ -162,10 +161,9 @@
               Toastify({
                 text: "You are now following @" + response.username,
                 duration: 3000,
-                newWindow: true,
                 close: true,
-                gravity: "top", 
-                position: 'right', 
+                gravity: "top",
+                position: 'right',
                 backgroundColor: "linear-gradient(to right, #80a9ff, #00ffff)",
                 stopOnFocus: true
               }).showToast();
@@ -186,10 +184,9 @@
               Toastify({
                 text: "You have unfollowed @" + response.username,
                 duration: 3000,
-                newWindow: true,
                 close: true,
-                gravity: "top", 
-                position: 'right', 
+                gravity: "top",
+                position: 'right',
                 backgroundColor: "linear-gradient(to right, #ffc3a0, #e70066)",
                 stopOnFocus: true
               }).showToast();

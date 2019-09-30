@@ -2,72 +2,72 @@
 header %} {% endblock %} {% block content %}
 
 <div id="homepage">
-  <div id="homepage-wrapper">
-    {% if not current_user.is_authenticated %}
-    <h2 class="text animated bounce notlogin">Click on the Sign Up or Sign In button above!</h2>
-    {% endif %}
-    {% if not current_user.following and current_user.is_authenticated %}
-    <form class='user-directory' action="{{ url_for('users.directory') }}">
-      <label class="tap-the-symbol">Tap the symbol!</label><br>
-      <input type="image" src="https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-14-512.png"
-        style="width: 100px; height: 100px;" />
-    </form>
-    {% endif %}
-    <div class="homepage-container">
-      {% for u in current_user.following %}
-      {% if u.pictures %}
-      <div class="card mx-auto p-3 mt-4 mb-3 profile-container">
-        <div class="top-section">
-          <form action="{{ url_for('users.show', username=u.username)}}">
-            <input type="image" class="rounded-circle profile-image" style="width: 100px; height: 100px;"
-              src="{{ u.profile_image_path }}" />
-          </form>
-          <div class="top-right-content">
-            <ul>
-              <li>
-                <a class="username" href="{{ url_for('users.show', username=u.username)}}">@{{ u.username }}</a>
-                {% if current_user.is_authenticated and u.id != current_user.id %}
-                <button type="button" id="followbtn-{{ u.id }}"
-                  class="btn {{'btn-primary' if u not in current_user.following}} {{'btn-light' if u in current_user.following}} {{'btn-info' if u in current_user.following_request}} followbtns">
-                  {% if u in current_user.following %}
-                  Following
-                  {% elif u in current_user.following_request %}
-                  Pending
-                  {% else %}
-                  Follow
-                  {% endif %}
-                </button>
-              </li>
-              <li>
-                <ul>
-                  <li><span class='counts'>{{u.pictures | length}}</span> posts</li>
-                  <li><span class='counts followers'>{{u.follower | length}}</span> followers</li>
-                  <li><span class='counts'>{{u.following | length}}</span> following</li>
-                </ul>
-              </li>
-            </ul>
-          </div>
+  {% if not current_user.is_authenticated %}
+  <h2 class="text animated bounce notlogin">Click on the Sign Up or Sign In button above!</h2>
+  {% endif %}
+  {% if not current_user.following and current_user.is_authenticated %}
+  <form class='user-directory' action="{{ url_for('users.directory') }}">
+    <label class="tap-the-symbol">Tap the symbol!</label><br>
+    <input type="image" src="https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-14-512.png"
+      style="width: 100px; height: 100px;" />
+  </form>
+  {% endif %}
+  <div class="homepage-container">
+    {% for u in current_user.following %}
+    {% if u.pictures %}
+    <div class="card mx-auto p-3 mt-3 profile-container row">
+      <div class="top-section">
+        <form action="{{ url_for('users.show', username=u.username)}}">
+          <input type="image" class="rounded-circle profile-image" style="width: 100px; height: 100px;"
+            src="{{ u.profile_image_path }}" />
+        </form>
+        <div class="top-right-content">
+          <ul>
+            <li>
+              <a class="username" href="{{ url_for('users.show', username=u.username)}}">@{{ u.username }}</a>
+              {% if current_user.is_authenticated and u.id != current_user.id %}
+              <button type="button" id="followbtn-{{ u.id }}"
+                class="btn {{'btn-primary' if u not in current_user.following}} {{'btn-light' if u in current_user.following}} {{'btn-info' if u in current_user.following_request}} followbtns">
+                {% if u in current_user.following %}
+                Following
+                {% elif u in current_user.following_request %}
+                Pending
+                {% else %}
+                Follow
+                {% endif %}
+              </button>
+            </li>
+            <li>
+              <ul>
+                <li><span class='counts'>{{u.pictures | length}}</span> posts</li>
+                <li><span class='counts followers'>{{u.follower | length}}</span> followers</li>
+                <li><span class='counts'>{{u.following | length}}</span> following</li>
+              </ul>
+            </li>
+          </ul>
         </div>
-        {% endif %}
-        {% if u.status == 'Public' or current_user.id == u.id or u in current_user.following %}
-        <div class="picture-container-{{ u.id }}">
-          {% for image in u.num_of_image(count=1) %}
-          <div class="text-center">
-            <img class="my-2 images" style="width: 500px; height: 500px;" src="{{ image.post_image }}" />
-          </div>
-          {% endfor %}
-          <a href="{{ url_for('users.show', username=u.username) }}">See More!</a>
-        </div>
-        {% else %}
-        <h1 class="text-center">Private Profile</h1>
-        {% endif %}
       </div>
       {% endif %}
-      {% endfor %}
+      {% if u.status == 'Public' or current_user.id == u.id or u in current_user.following %}
+      <div class="picture-container-{{ u.id }}">
+        <div class="homepage-pics row">
+          {% for image in u.num_of_image(count=1) %}
+          <div class="text-center col-md-6 imagewrapper">
+            <img class="my-2 images" src="{{ image.post_image }}" />
+          </div>
+          {% endfor %}
+        </div>
+        <a class="row" style="justify-content: center;" href="{{ url_for('users.show', username=u.username) }}">See More!</a>
+      </div>
+      {% else %}
+      <h1 class="text-center">Private Profile</h1>
+      {% endif %}
     </div>
+    {% endif %}
+    {% endfor %}
   </div>
 </div>
-</div>
+
 {% endblock %}
 
 
