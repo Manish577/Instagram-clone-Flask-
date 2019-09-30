@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
   <link rel="shortcut icon" href="{{ url_for('static', filename='image/favicon.ico') }}" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
   {% assets "home_css" %}
   <link rel="stylesheet" href="{{ ASSET_URL }}" />
   {% endassets %} {% assets "home_js" %}
@@ -141,15 +141,34 @@
     id = e.target.id.split('-')[1]
     if ($(`#followbtn-${id}`).html().trim() == "Follow") {
       $.ajax({
-        url: `/users/follow/${id}`,
+        url: `/following/follow/${id}`,
         method: 'post',
         success: function (response) {
-          console.log(response)
           if (response.success) {
             if (response.pending) {
               $(`#followbtn-${id}`).html('Pending').removeClass('btn-primary').addClass('btn-info')
+              Toastify({
+                text: "Pending follow request.",
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top", 
+                position: 'right', 
+                backgroundColor: "linear-gradient(to right, #00b09b, #96c93d,)",
+                stopOnFocus: true
+              }).showToast();
             } else {
               $(`#followbtn-${id}`).html('Following').removeClass('btn-primary').addClass('btn-light')
+              Toastify({
+                text: "You are now following @" + response.username,
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top", 
+                position: 'right', 
+                backgroundColor: "linear-gradient(to right, #80a9ff, #00ffff)",
+                stopOnFocus: true
+              }).showToast();
               $('.followers').html(response.followers)
             }
           }
@@ -158,13 +177,22 @@
       // } else if ($(`#followbtn-${id}`).html().trim() == "Pending") 
     } else {
       $.ajax({
-        url: `/users/unfollow/${id}`,
+        url: `/following/unfollow/${id}`,
         method: 'post',
         success: function (response) {
-          console.log(response)
           if (response.success) {
             if ($(`#followbtn-${id}`).html().trim() == "Following") {
               $(`#followbtn-${id}`).html('Follow').removeClass('btn-light').addClass('btn-primary')
+              Toastify({
+                text: "You have unfollowed @" + response.username,
+                duration: 3000,
+                newWindow: true,
+                close: true,
+                gravity: "top", 
+                position: 'right', 
+                backgroundColor: "linear-gradient(to right, #ffc3a0, #e70066)",
+                stopOnFocus: true
+              }).showToast();
               $('.followers').html(response.followers)
             } else {
               $(`#followbtn-${id}`).html('Follow').removeClass('btn-info').addClass('btn-primary')

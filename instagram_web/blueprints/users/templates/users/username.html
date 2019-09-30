@@ -10,6 +10,12 @@
             <div class="col-md-6">
                 <div class="card bio border-0 top-details">
                     <h1>@{{user.username}}</h1>
+                    <div class='card border-0 description'>{{user.description}}</div>
+                    <ul>
+                        <li><span class='counts'>{{user.pictures | length}}</span> posts</li>
+                        <li><span class='counts followers'>{{user.follower | length}}</span> followers</li>
+                        <li><span class='counts'>{{user.following | length}}</span> following</li>
+                    </ul>
                     {% if current_user.is_authenticated and user.id != current_user.id %}
                     <button type="button" id="followbtn-{{ user.id }}"
                         class="btn {{'btn-primary' if user not in current_user.following}} {{'btn-light' if user in current_user.following}} {{'btn-info' if user in current_user.following_request}} followbtns">
@@ -22,12 +28,6 @@
                         {% endif %}
                     </button>
                     {% endif %}
-                    <ul>
-                        <li><span class='counts'>{{user.pictures | length}}</span> posts</li>
-                        <li><span class='counts followers'>{{user.follower | length}}</span> followers</li>
-                        <li><span class='counts'>{{user.following | length}}</span> following</li>
-                    </ul>
-                    <div class='card border-0 description'>{{user.description}}</div>
                 </div>
             </div>
         </div>

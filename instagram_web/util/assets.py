@@ -5,6 +5,7 @@ bundles = {
     'home_js': Bundle(
         'js/vendor/jquery-3.3.1.js',
         'js/vendor/popper.js',
+        'js/vendor/toastify.js',
         'js/vendor/bootstrap-4.1.3.js',
         'js/custom.js',
         filters='jsmin',
@@ -12,6 +13,7 @@ bundles = {
 
     'home_css': Bundle(
         'css/vendor/bootstrap-4.1.3.css',
+        'css/vendor/toastify.css',
         'css/custom.scss',
         depends=['css/*.scss'],
         filters='libsass',

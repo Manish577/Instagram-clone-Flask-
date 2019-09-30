@@ -42,7 +42,6 @@ def create():
                     password=password, description=description, status=status)
 
     if new_user.save():
-        flash('Successfully created user.')
         login_user(new_user)
         return redirect(url_for('users.show', username=new_user.username))
     else:

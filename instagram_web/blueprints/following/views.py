@@ -14,7 +14,6 @@ following_blueprint = Blueprint('following',
 
 @following_blueprint.route('/follow/<id>', methods=['POST'])
 def follow(id):
-    # do your stuffs, talk db
     idol = User.get_by_id(id)
     if idol.status == "Public":
         i = Follows(idol_id=id, fan_id=current_user.id, is_approved=True)
@@ -44,6 +43,7 @@ def follow(id):
             return jsonify({
                 'success': True,
                 'pending': False,
+                'username': idol.username,
                 'followers': int(followers) + 1
             })
 
@@ -60,14 +60,16 @@ def unfollow(id):
             return jsonify({
                 'success': True,
                 'followers': int(followers) - 1,
-                'status': True
+                'status': True,
+                'username': user.username
             })
         else:
             return jsonify({
                 'success': True,
                 'followers': int(followers) - 1,
                 'status': False,
-                'private_container': private_container
+                'private_container': private_container,
+                'username': user.username
             })
 
 

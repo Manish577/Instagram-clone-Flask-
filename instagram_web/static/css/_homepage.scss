@@ -3,6 +3,11 @@
   margin-top: 55px;
   background-color: $secondary-accent;
 
+  .animated {
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+  }
+
   .notlogin {
     text-align: center;
     font-family: monospace;

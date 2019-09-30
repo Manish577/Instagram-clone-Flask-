@@ -4,7 +4,7 @@ header %} {% endblock %} {% block content %}
 <div id="homepage">
   <div id="homepage-wrapper">
     {% if not current_user.is_authenticated %}
-    <h2 class="notlogin">Click on the Sign Up or Sign In button above!</h2>
+    <h2 class="text animated bounce notlogin">Click on the Sign Up or Sign In button above!</h2>
     {% endif %}
     {% if not current_user.following and current_user.is_authenticated %}
     <form class='user-directory' action="{{ url_for('users.directory') }}">
