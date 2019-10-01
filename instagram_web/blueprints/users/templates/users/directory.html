@@ -3,29 +3,49 @@
 
 
 <div id="directory">
-    {% for user in users %}
-    {% if user.pictures %}
-    <h3>@{{ user.username }}</h3>
-    <img class="rounded-circle" style="width: 250px; height: 250px;" src="{{ user.profile_image_path }}" />
-    {% if current_user.is_authenticated and user.id != current_user.id %}
-    <button type="button" id="followbtn-{{ user.id }}"
-        class="btn {{'btn-primary' if user not in current_user.following}} {{'btn-light' if user in current_user.following}} {{'btn-info' if user in current_user.following_request}} followbtns">
-        {% if user in current_user.following %}
-        Following
-        {% elif user in current_user.following_request %}
-        Pending
-        {% else %}
-        Follow
-        {% endif %}
-    </button>
-    {% endif %}
-    {% for image in user.pictures %}
-    <div>
-        <img class="mx-2 my-2 " style="width: 250px; height: 250px;" src="{{ image.post_image }}" />
+    <div class="container">
+        <div class="row">
+            {% for user in users %}
+            {% if current_user != user %}
+            {% if user.pictures %}
+            <div class="col-md-4">
+                <div class="card pt-3 mt-3">
+                    <div class="row uppersect">
+                        <form action="{{ url_for('users.show', username=user.username)}}">
+                            <input type="image" class="rounded-circle profile-image"
+                                style="width: 100px; height: 100px;" src="{{ user.profile_image_path }}" />
+                        </form>
+                        <div class="details">
+                            <a class="username"
+                                href="{{ url_for('users.show', username=user.username)}}">@{{ user.username }}</a><br>
+                            {% if current_user.is_authenticated and user.id != current_user.id %}
+                            <button type="button" id="followbtn-{{ user.id }}"
+                                class="btn {{'btn-primary' if user not in current_user.following}} {{'btn-light' if user in current_user.following}} {{'btn-info' if user in current_user.following_request}} followbtns">
+                                {% if user in current_user.following %}
+                                Following
+                                {% elif user in current_user.following_request %}
+                                Pending
+                                {% else %}
+                                Follow
+                                {% endif %}
+                            </button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div>
+                        {% for image in user.num_of_image(count=1) %}
+                        <div>
+                            <img class="mx-2 my-2 " style="width: 250px; height: 250px;" src="{{ image.post_image }}" />
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+        </div>
     </div>
-    {% endfor %}
-    {% endif %}
-    {% endfor %}
 </div>
 
 {% endblock %}

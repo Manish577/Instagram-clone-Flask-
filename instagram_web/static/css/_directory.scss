@@ -1,4 +1,25 @@
 #directory {
     padding-top: 55px;
     background-color: $secondary-accent;
+    justify-content: center;
+
+    .card {
+        text-align: center;
+
+        .uppersect {
+            justify-content: center;
+
+            .profile-image {
+                outline: none;
+            }
+
+            .details {
+                margin-left: 10px;
+
+                a {
+                    color: black;
+                }
+            }
+        }
+    }
 }
