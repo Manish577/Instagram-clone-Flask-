@@ -34,7 +34,7 @@ def uploaded():
     except:
         flash('Profile picture upload unsuccessful')
 
-    return redirect(url_for('users.show', username=current_user.username))
+    return redirect(url_for('users.edit'))
 
 
 @pictures_blueprint.route('/upload_image', methods=["POST"])
