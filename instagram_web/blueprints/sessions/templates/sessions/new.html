@@ -2,7 +2,7 @@
 
 <div id="signin-page">
   <div class="bg">
-    <div class="card w-50 mx-auto p-3 mt-4 mb-3">
+    <div class="card mx-auto p-3 mt-4 mb-3 col-md-6">
       <h1 class="card-title">Sign In to Nextagram.</h1>
       <form action="{{ url_for('sessions.signed_in') }}" method="POST">
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
@@ -33,7 +33,7 @@
       </a>
       {% with messages = get_flashed_messages() %} {% if messages %} {% for
       message in messages %}
-      <h2>{{ message }}</h2>
+      <h5 style="color: red;">{{ message }}</h5>
       {% endfor %} {% endif %} {% endwith %}
     </div>
   </div>

@@ -28,6 +28,17 @@ def create():
     confirm_password = request.form.get('confirm-password')
     description = request.form.get('description')
     status = request.form.get('signup-status')
+
+    taken = False
+    check_username = User.get_or_none(User.username == username)
+    check_email = User.get_or_none(User.email == email)
+    if check_email or check_username:
+        taken = True
+
+    if taken:
+        flash('Username or email taken. Please try again.')
+        return render_template('users/new.html', errors=password_error)
+
     if password != confirm_password:
         password_error.append(
             'PLEASE MAKE SURE CONFIRM PASSORD FIELD IS EQUAL TO PASSWORD FIELD. PLEASE TRY AGAIN.')
@@ -87,18 +98,21 @@ def edit():
 @login_required
 def update():
     username = request.form.get('username')
-    check_username = User.get_or_none(User.username == username)
-    if check_username:
-        flash('Please enter untaken username.')
-        return redirect(url_for('users.edit'))
     name = request.form.get('name')
     email = request.form.get('email')
     description = request.form.get('description')
     status = request.form.get('status')
+    taken = False
+
+    check_username = User.get_or_none(User.username == username)
     check_email = User.get_or_none(User.email == email)
-    if check_email:
-        flash('Please enter untaken email.')
+    if check_email or check_username:
+        taken = True
+
+    if taken:
+        flash('Username or email is taken. Please try again.')
         return redirect(url_for('users.edit'))
+
     if not username:
         username = current_user.username
     if not name:
@@ -129,13 +143,13 @@ def follow(id):
     idol = User.get_by_id(id)
     if idol.status == "Public":
         i = Follows(idol_id=id, fan_id=current_user.id, is_approved=True)
-    else: 
+    else:
         i = Follows(idol_id=id, fan_id=current_user.id, is_approved=False)
         message = Mail(
-        from_email='nextagram@example.com',
-        to_emails=idol.email,
-        subject='Following Request Notification',
-        html_content='@' + current_user.username + ' wants to follow you.')
+            from_email='nextagram@example.com',
+            to_emails=idol.email,
+            subject='Following Request Notification',
+            html_content='@' + current_user.username + ' wants to follow you.')
         try:
             sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
             response = sg.send(message)
@@ -189,15 +203,15 @@ def follower_request():
 
 @users_blueprint.route('/requests/<id>', methods=['POST'])
 def approve_requests(id):
-    approved = Follows.update(is_approved=True).where((Follows.fan_id == id) & (Follows.idol_id == current_user.id))
+    approved = Follows.update(is_approved=True).where(
+        (Follows.fan_id == id) & (Follows.idol_id == current_user.id))
     if approved.execute():
         return redirect(url_for('users.follower_request'))
 
 
 @users_blueprint.route('/reject/<id>', methods=['POST'])
 def reject_requests(id):
-    rejected = Follows.delete().where((Follows.fan_id == id) & (Follows.idol_id == current_user.id))
+    rejected = Follows.delete().where((Follows.fan_id == id) &
+                                      (Follows.idol_id == current_user.id))
     if rejected.execute():
         return redirect(url_for('users.follower_request'))
-
-

@@ -1,70 +1,35 @@
 {% extends "_layout.html" %} {% block content %}
 <div id="signup-page">
   <div class="bg">
-    <div class="card w-50 mx-auto p-3 mt-4 mb-3">
+    <div class="card col-md-6 mx-auto p-3 mt-4 mb-3">
       <h1 class="card-title">Sign Up For Nextagram.</h1>
-      <form
-        class="needs-validation"
-        action="{{ url_for('users.create') }}"
-        method="POST"
-        novalidate
-      >
+      <form class="needs-validation" action="{{ url_for('users.create') }}" method="POST" novalidate>
         <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
         <div class="form-group">
           <label for="name">Name:</label>
-          <input
-            name="name"
-            type="text"
-            class="form-control"
-            id="name"
-            placeholder="Enter your name..."
-            required
-          />
+          <input name="name" type="text" class="form-control" id="name" placeholder="Enter your name..." required />
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please enter a name.</div>
         </div>
         <div class="form-group">
           <label for="username">Username:</label>
-          <input
-            name="username"
-            type="text"
-            class="form-control"
-            id="username"
-            placeholder="Enter username..."
-            required
-          />
+          <input name="username" type="text" class="form-control" id="username" placeholder="Enter username..."
+            required />
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please enter a username.</div>
         </div>
         <div class="form-group">
           <label for="email">Email:</label>
-          <input
-            name="email"
-            type="email"
-            class="form-control"
-            id="exampleInputEmail1"
-            aria-describedby="emailHelp"
-            placeholder="Enter email"
-            pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}"
-            required
-          />
-          <small id="emailHelp" class="form-text text-muted"
-            >We'll never share your email with anyone else.</small
-          >
+          <input name="email" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+            placeholder="Enter email" pattern="[^@]+@[^@]+\.[a-zA-Z]{2,6}" required />
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please enter an email.</div>
         </div>
         <div class="form-group">
           <label for="password">Password:</label>
-          <input
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{6,99}$"
-            name="password"
-            type="password"
-            class="form-control"
-            id="password"
-            placeholder="Password"
-            required
-          />
+          <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{6,99}$" name="password" type="password"
+            class="form-control" id="password" placeholder="Password" required />
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">
             Please enter a password longer than six characters with a mixture of
@@ -73,35 +38,35 @@
         </div>
         <div class="form-group">
           <label for="password">Confirm Password:</label>
-          <input
-            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{6,99}$"
-            name="confirm-password"
-            type="password"
-            class="form-control"
-            id="confirm-password"
-            placeholder="Confirm Password"
-            required
-          />
+          <input pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*_=+-]).{6,99}$" name="confirm-password" type="password"
+            class="form-control" id="confirm-password" placeholder="Confirm Password" required />
           <div class="valid-feedback">Looks good!</div>
           <div class="invalid-feedback">Please confirm your password.</div>
         </div>
         <div class="form-group form-check">
-            {% if current_user.status == "Private" %}
-            <input value="private" name="signup-status" type="checkbox" class="form-check-input" id="exampleCheck1" checked/>
-            {% else %}
-            <input value="private" name="signup-status" type="checkbox" class="form-check-input" id="exampleCheck1">
-            {% endif %}
-            <label class="form-check-label" for="exampleCheck1">Make Private</label>
+          {% if current_user.status == "Private" %}
+          <input value="private" name="signup-status" type="checkbox" class="form-check-input" id="exampleCheck1"
+            checked />
+          {% else %}
+          <input value="private" name="signup-status" type="checkbox" class="form-check-input" id="exampleCheck1">
+          {% endif %}
+          <label class="form-check-label" for="exampleCheck1">Make Private</label>
         </div>
         <div class="form-group">
           <label for="exampleFormControlTextarea1">Description:</label>
-          <textarea
-            name="description"
-            class="form-control"
-            id="description"
-            rows="3"
-          ></textarea>
+          <textarea name="description" class="form-control" id="description" rows="3"></textarea>
         </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <h5 style="color: red;">{{ message }}</h5>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% for error in errors if errors|length >
+          0 %}
+        <li style="list-style: none" class="alert alert-danger">{{ error }}</li>
+        {% endfor %}
         <button type="submit" class="btn btn-dark">Create</button>
       </form>
     </div>
@@ -110,18 +75,18 @@
 
 <script>
   // Example starter JavaScript for disabling form submissions if there are invalid fields
-  (function() {
+  (function () {
     "use strict";
     window.addEventListener(
       "load",
-      function() {
+      function () {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName("needs-validation");
         // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
+        var validation = Array.prototype.filter.call(forms, function (form) {
           form.addEventListener(
             "submit",
-            function(event) {
+            function (event) {
               if (form.checkValidity() === false) {
                 event.preventDefault();
                 event.stopPropagation();
