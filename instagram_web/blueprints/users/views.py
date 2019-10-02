@@ -118,7 +118,7 @@ def update():
     if not name:
         name = current_user.name
     if not email:
-        email = current_user.name
+        email = current_user.email
     if not description:
         description = current_user.description
     if status == "private":

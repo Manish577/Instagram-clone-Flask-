@@ -24,7 +24,7 @@ def signed_in():
     if input_username or input_password:
         if user and check_password_hash(user.password, input_password):
             login_user(user)
-            return redirect(url_for('users.show', username=user.username))
+            return redirect(url_for('home'))
         else:
             flash('Invalid Login. Please try again.')
             return render_template('sessions/new.html')
