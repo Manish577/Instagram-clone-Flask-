@@ -1,0 +1,15 @@
+body {
+    background-color: $secondary-accent;
+    text-align: center;
+    position: relative;
+    #donation-page {
+        padding-top: 55px;
+        width: 80%;
+        position: relative;
+        right: 10%;
+        left: 10%;
+        #submit-button {
+            margin-bottom: 10px;
+        }
+    }
+}

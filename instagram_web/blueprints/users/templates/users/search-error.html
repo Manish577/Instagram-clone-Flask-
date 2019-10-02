@@ -1,16 +1,27 @@
 {% extends "_layout.html" %}
 {% block content %}
 <style>
-h2 {
-    padding: 30%;
-}
+    body {
+        background-color: #f6f3f1;
+    }
+
+    .messages {
+        text-align: center;
+        padding-top: 30vh
+    }
 </style>
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-{% for message in messages %}
-<h2>{{ message }}</h2>
-{% endfor %}
-{% endif %}
-{% endwith %}
+
+<body>
+    <div class="messages">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <h2>{{ message }}</h2>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <img style="width: 375px;" src="https://media.giphy.com/media/joV1k1sNOT5xC/giphy.gif" alt="errorgif" />
+    </div>
+</body>
 
 {% endblock %}

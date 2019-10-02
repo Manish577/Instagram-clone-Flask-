@@ -50,10 +50,12 @@
                     <div class='m-2'>
                         {% if current_user != user %}
                         <form action="{{url_for('donations.new',id=picture.id)}}">
-                            {% endif %}
-                            <input type='image' alt="Submit" src="{{picture.post_image}}"
-                                style="width: 350px; height: 350px;" />
+                            <input data-toggle="tooltip" title="Donate" data-placement="top" type='image' alt="Submit"
+                                src="{{picture.post_image}}" style="width: 350px; height: 350px;" />
                         </form>
+                        {% else %}
+                        <img alt="ownpics" src="{{picture.post_image}}" style="width: 350px; height: 350px;" />
+                        {% endif %}
                     </div>
                     {% endfor %}
                     {% else %}

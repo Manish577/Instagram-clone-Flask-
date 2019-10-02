@@ -6,17 +6,16 @@
 </head>
 
 <body>
-  <div id="dropin-container"></div>
-  <button id="submit-button">Donate</button>
-  <form
-    action="{{ url_for('donations.create_purchase', id=id) }}"
-    id="this-form"
-    method="POST"
-  >
-    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
-    <input name="this-amount" type="number" />
-    <input name="this-input" id="hidden-input" type="hidden" />
-  </form>
+  <div id="donation-page">
+    <div id="dropin-container"></div>
+    <button class="btn btn-primary" id="submit-button">Donate</button>
+    <form action="{{ url_for('donations.create_purchase', id=id) }}" id="this-form" method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+      <input name="this-amount" type="number" placeholder="$" />
+      <input name="this-input" id="hidden-input" type="hidden" />
+    </form>
+  </div>
+
   <script>
     let myform = document.querySelector("#this-form");
     let button = document.querySelector("#submit-button");
@@ -27,11 +26,20 @@
         authorization: "{{client_token}}",
         container: "#dropin-container"
       },
-      function(createErr, instance) {
-        button.addEventListener("click", function() {
-          instance.requestPaymentMethod(function(err, payload) {
+      function (createErr, instance) {
+        button.addEventListener("click", function () {
+          instance.requestPaymentMethod(function (err, payload) {
             myinput.value = payload.nonce;
             myform.submit();
+            Toastify({
+              text: "Successfully donated.",
+              duration: 3000,
+              close: true,
+              gravity: "top",
+              position: 'right',
+              backgroundColor: "linear-gradient(to right, #6ad190, #00a2a3)",
+              stopOnFocus: true
+            }).showToast();
           });
         });
       }
