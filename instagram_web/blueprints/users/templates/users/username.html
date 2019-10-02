@@ -3,7 +3,7 @@
 <div id="profile-page">
     <div class="container">
         <div class='row top-content'>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <img class="rounded-circle profile-image" style="width: 180px; height: 180px;"
                     src="{{user.profile_image_path}}" />
             </div>
@@ -12,8 +12,8 @@
                     <h1>@{{user.username}}</h1>
                     <div class='card border-0 description'>{{user.description}}</div>
                     <ul>
-                        <li><span class='counts'>{{user.pictures | length}}</span> posts</li>
-                        <li><span class='counts followers'>{{user.follower | length}}</span> followers</li>
+                        <li><span class='counts'>{{user.pictures | length}}</span> posts</li>&nbsp;&nbsp;
+                        <li><span class='counts followers'>{{user.follower | length}}</span> followers</li>&nbsp;&nbsp;
                         <li><span class='counts'>{{user.following | length}}</span> following</li>
                     </ul>
                     {% if current_user.is_authenticated and user.id != current_user.id %}

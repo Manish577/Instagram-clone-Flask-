@@ -7,7 +7,7 @@ header %} {% endblock %} {% block content %}
   {% endif %}
   {% if not current_user.following and current_user.is_authenticated %}
   <form class='user-directory' action="{{ url_for('users.directory') }}">
-    <label class="tap-the-symbol">Tap the symbol!</label><br>
+    <label class="tap-the-symbol">Tap the symbol to explore Nextagram!</label><br>
     <input type="image" src="https://cdn1.iconfinder.com/data/icons/instagram-ui-glyph/48/Sed-14-512.png"
       style="width: 100px; height: 100px;" />
   </form>

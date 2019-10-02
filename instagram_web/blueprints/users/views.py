@@ -54,7 +54,7 @@ def create():
 
     if new_user.save():
         login_user(new_user)
-        return redirect(url_for('users.show', username=new_user.username))
+        return redirect(url_for('home', username=new_user.username))
     else:
         return render_template('users/new.html', username=request.form.get('username'), email=request.form.get('email'), errors=new_user.errors)
 

@@ -71,7 +71,7 @@ class User(BaseModel, UserMixin):
             self.password = generate_password_hash(self.password)
         else:
             self.errors.append(
-                'PLEASE ENTER VALID PASSWORD. PLEASE TRY AGAIN.')
+                'PLEASE ENTER A PASSWORD WITH A MIXTURE OF CAPITAL AND SMALL LETTERS, NUMBERS, AND SYMBOL. PLEASE TRY AGAIN.')
 
 
 class Pictures(BaseModel):
