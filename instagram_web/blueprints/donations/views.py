@@ -47,7 +47,6 @@ def create_purchase(id):
     pic = Pictures.get_by_id(id)
     user = User.get_or_none(User.id == pic.user_id)
     username = user.username
-    flash('Successfully donated.')
     message = Mail(
         from_email='nextagram@example.com',
         to_emails=user.email,
