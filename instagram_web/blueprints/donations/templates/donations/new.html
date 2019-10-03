@@ -5,7 +5,7 @@
   <script src="https://js.braintreegateway.com/web/dropin/1.20.0/js/dropin.min.js"></script>
 </head>
 
-<body>
+<body id="donationbody">
   <div id="donation-page">
     <div id="dropin-container"></div>
     <button class="btn btn-primary" id="submit-button">Donate</button>
@@ -32,7 +32,7 @@
             myinput.value = payload.nonce;
             myform.submit();
             Toastify({
-              text: "Successfully donated.",
+              text: "Successfully donated. Redirecting...",
               duration: 3000,
               close: true,
               gravity: "top",
