@@ -5,6 +5,9 @@
 <div id="directory">
     <div class="container">
         <div class="row">
+            {% if not users %}
+            <h1>You are the only user of Nextagram currently :(</h1>
+            {% endif %}
             {% for user in users %}
             {% if current_user != user %}
             {% if user.pictures %}
