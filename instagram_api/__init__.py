@@ -1,8 +1,14 @@
+import os
 from instagram_api.blueprints.users.views import users_api_blueprint
 from instagram_api.blueprints.images.views import images_api_blueprint
-from app import csrf, app
+from flask_wtf.csrf import CSRFProtect
+from flask import Flask
 from flask_cors import CORS
 
+web_dir = os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), 'instagram_web')
+app = Flask('NEXTAGRAM', root_path=web_dir)
+csrf = CSRFProtect(app)
 cors = CORS(app, resources={r"/api/*": {"origins": "*"}})
 csrf.exempt(users_api_blueprint)
 csrf.exempt(images_api_blueprint)

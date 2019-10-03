@@ -4,7 +4,7 @@ from models.donation import Donation
 import os
 import boto3
 import botocore
-from app import s3
+from myproject import s3
 from flask_login import current_user
 import braintree
 from sendgrid import SendGridAPIClient

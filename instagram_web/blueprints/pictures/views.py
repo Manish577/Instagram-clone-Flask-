@@ -3,7 +3,7 @@ from models.user import User, Pictures
 import os
 import boto3
 import botocore
-from app import s3
+from myproject import s3
 from flask_login import current_user
 
 pictures_blueprint = Blueprint('pictures',

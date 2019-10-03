@@ -2,7 +2,7 @@ from authlib.flask.client import OAuth
 import config
 import os
 
-from app import app
+from myproject import app
 
 oauth = OAuth(app)
 

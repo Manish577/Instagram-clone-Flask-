@@ -1,4 +1,4 @@
-from app import app
+from myproject import app
 import instagram_api
 import instagram_web
 

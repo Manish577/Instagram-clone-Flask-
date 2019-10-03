@@ -1,4 +1,4 @@
-from app import app
+from myproject import app
 from flask import render_template
 from instagram_web.blueprints.users.views import users_blueprint
 from instagram_web.blueprints.sessions.views import sessions_blueprint
