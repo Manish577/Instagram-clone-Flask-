@@ -64,7 +64,7 @@ def show(username):
     pictures = Pictures.select()
     user = User.get_or_none(User.username == username)
     if user:
-        return render_template('users/username.html', user=user, pictures=pictures)
+        return render_template('users/userpage.html', user=user, pictures=pictures)
     else:
         flash('User not found. Please be aware that username is case sensitive.')
         return render_template('users/search-error.html')
