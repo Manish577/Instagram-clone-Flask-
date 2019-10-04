@@ -10,6 +10,7 @@
             <div class="col-md-6">
                 <div class="card bio border-0 top-details">
                     <h1>@{{user.username}}</h1>
+                    <h5>{{user.name}}</h5>
                     <div class='card border-0 description'>{{user.description}}</div>
                     <ul>
                         <li><span class='counts'>{{user.pictures | length}}</span> posts</li>&nbsp;&nbsp;
@@ -36,7 +37,7 @@
             <form action="{{url_for('pictures.create')}}" method="POST" enctype="multipart/form-data">
                 <input type='hidden' name="csrf_token" value="{{csrf_token()}}" />
                 <br></br>
-                <input type="file" name="picture">
+                <input type="file" name="picture" class="btn btn-light">
                 <br></br>
                 <button type="submit" class='btn btn-primary'>Post Picture</button>
             </form>
